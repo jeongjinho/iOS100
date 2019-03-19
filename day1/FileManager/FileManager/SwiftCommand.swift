@@ -8,13 +8,18 @@
 
 import Foundation
 
-//typealias ComaandResult : (isSuccess: Bool)
-
 public class SwiftCommand {
 
-    public var path: String {
+    init() {
+        print("\n⬛️⬛️⬛️⬛️⬛️⬛️⬛️⬛️⬛️⬛️⬛️⬛️⬛️⬛️\n")
+    }
+    deinit {
+        print("\n⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️\n")
+    }
+    public var pwd: String {
         get {
-          return currentPath.path
+            print(currentPath.path)
+            return currentPath.path
         }
     }
     private var currentPath: URL = FileManager.default.urls(for: .documentDirectory,in: .userDomainMask).first!
@@ -49,7 +54,9 @@ public class SwiftCommand {
         }
     }
     public func touch(_ fileName: String) {
+        print(currentPath.appendingPathComponent(fileName))
          let url = currentPath.appendingPathComponent(fileName)
+         print(url)
         do {
            try "".write(to: url, atomically: false, encoding: .utf8)
         } catch let error {
@@ -64,24 +71,62 @@ public class SwiftCommand {
             print(" file list error description: \(error.localizedDescription)")
         }
     }
-    
     public func mv(_ file: String, _ destinationDirectory: String) {
-    
         let filePath = currentPath.appendingPathComponent(file)
-        print(filePath)
-        currentPath =  currentPath.appendingPathComponent(destinationDirectory)
-        currentPath = currentPath.appendingPathComponent(file)
-        print(currentPath)
-        if !fileManager.fileExists(atPath: currentPath.path) {
+        let destination = currentPath.appendingPathComponent(destinationDirectory).appendingPathComponent(file)
+        if !fileManager.fileExists(atPath: destination.path) {
             do {
-                try fileManager.moveItem(at: filePath, to: currentPath)
+                try fileManager.moveItem(at: filePath, to: destination)
             } catch let error {
                 print(" directory moving error description:/ \(error.localizedDescription)")
             }
         }
     }
+    public func rm(_ file: String) {
+        
+       
+        var isDirectory : ObjCBool = false
+        let current = currentPath.appendingPathComponent(file)
+        if fileManager.fileExists(atPath:current.path, isDirectory: &isDirectory) {
+            if isDirectory.boolValue {
+                print(" file delete error description: this path is not file")
+                return
+            }
+        }
+        do {
+           try self.fileManager.removeItem(atPath: current.path)
+        } catch {
+            print(" file delete error description:/ \(error.localizedDescription)")
+        }
+    }
+    public func rmdir(_ file: String) {
+        var isDirectory : ObjCBool = false
+        let current = currentPath.appendingPathComponent(file)
+        if fileManager.fileExists(atPath:current.path, isDirectory: &isDirectory) {
+            if !isDirectory.boolValue {
+                print(" directory delete error description: this path is not directory")
+                return
+            }
+        }
+        do {
+            try self.fileManager.removeItem(atPath: current.path)
+        } catch {
+            print(" directory delete error description:/ \(error.localizedDescription)")
+        }
+    }
+    public func cp (_ path: String, _ destination: String) {
+        
+        let startPath = currentPath.appendingPathComponent(path)
+        let destinationPath = currentPath.appendingPathComponent(destination).appendingPathComponent(path)
+        do {
+           try fileManager.copyItem(at: startPath, to: destinationPath)
+        } catch {
+            print(" file copy error description:/ \(error.localizedDescription)")
+        }
+    }
     
 }
+
 
 
 
