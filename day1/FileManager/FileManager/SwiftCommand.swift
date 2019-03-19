@@ -22,6 +22,7 @@ public class SwiftCommand {
             return currentPath.path
         }
     }
+    
     private var currentPath: URL = FileManager.default.urls(for: .documentDirectory,in: .userDomainMask).first!
     private let fileManager: FileManager = FileManager.default
     
@@ -71,20 +72,19 @@ public class SwiftCommand {
             print(" file list error description: \(error.localizedDescription)")
         }
     }
-    public func mv(_ file: String, _ destinationDirectory: String) {
+    public func mv(_ file: String, _ destinationPath: String) {
         let filePath = currentPath.appendingPathComponent(file)
-        let destination = currentPath.appendingPathComponent(destinationDirectory).appendingPathComponent(file)
-        if !fileManager.fileExists(atPath: destination.path) {
-            do {
-                try fileManager.moveItem(at: filePath, to: destination)
-            } catch let error {
-                print(" directory moving error description:/ \(error.localizedDescription)")
-            }
+        if isDirectory(destinationPath){
+        let destination = currentPath.appendingPathComponent(destinationPath).appendingPathComponent(file)
+            move(filePath, destination)
+            return
         }
+        rm(destinationPath)
+        let destination = currentPath.appendingPathComponent(destinationPath)
+        move(filePath, destination)
+        
     }
     public func rm(_ file: String) {
-        
-       
         var isDirectory : ObjCBool = false
         let current = currentPath.appendingPathComponent(file)
         if fileManager.fileExists(atPath:current.path, isDirectory: &isDirectory) {
@@ -125,6 +125,20 @@ public class SwiftCommand {
         }
     }
     
+    private func isDirectory(_ path: String) -> Bool {
+        var isDirectory: ObjCBool = false
+        let tempPath = currentPath.appendingPathComponent(path)
+        fileManager.fileExists(atPath: tempPath.path, isDirectory: &isDirectory)
+       return isDirectory.boolValue
+    }
+    
+    private func move(_ path: URL, _ destination: URL) {
+        do {
+            try fileManager.moveItem(at: path, to: destination)
+        } catch let error {
+            print(" directory moving error description:/ \(error.localizedDescription)")
+        }
+    }
 }
 
 

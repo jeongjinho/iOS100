@@ -85,16 +85,6 @@ import Foundation
 
 
 let command = SwiftCommand()
-command.mkdir("temp2Dir") // 디렉토리 만들고
-command.mkdir("temp3Dir") // 하나 더 만들고
-///command.pwd
-command.touch("temp2file.txt") // 파일 만들고
-
-command.cp("temp2file.txt", "temp3Dir")
-//command.mv("temp2file.txt", "temp2Dir")
-//command.pwd
-
-//command.rmdir("temp3Dir")
-
-
+command.touch("temp1file.txt") // 파일 만들고
+command.mv("temp1file.txt", "temp2file.txt")
 
