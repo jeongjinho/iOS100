@@ -22,7 +22,6 @@ public class SwiftCommand {
             return currentPath.path
         }
     }
-    
     private var currentPath: URL = FileManager.default.urls(for: .documentDirectory,in: .userDomainMask).first!
     private let fileManager: FileManager = FileManager.default
     
@@ -36,9 +35,9 @@ public class SwiftCommand {
             return true
         default :
             if(fileManager.fileExists(atPath:currentPath.appendingPathComponent(mark).path)) {
-                let newPathString = currentPath.appendingPathComponent(mark).path
-                guard let newCurrentURL = URL.init(string: newPathString) else {return false }
-                currentPath = newCurrentURL
+             //   let newPathString =
+              //  guard let newCurrentURL = URL.init(string: newPathString) else {return false }
+                currentPath = currentPath.appendingPathComponent(mark)
                 return true
             }
             return false
@@ -57,7 +56,6 @@ public class SwiftCommand {
     public func touch(_ fileName: String) {
         print(currentPath.appendingPathComponent(fileName))
          let url = currentPath.appendingPathComponent(fileName)
-         print(url)
         do {
            try "".write(to: url, atomically: false, encoding: .utf8)
         } catch let error {
@@ -124,14 +122,26 @@ public class SwiftCommand {
             print(" file copy error description:/ \(error.localizedDescription)")
         }
     }
+    public func cat(_ filepath: String) {
+        let path = currentPath.appendingPathComponent(filepath)
+        if  fileManager.isReadableFile(atPath: path.path) {
+            do {
+                let contents = try String.init(contentsOf: path)
+                print(contents)
+            } catch {
+                print(" file reading error description:/ \(error.localizedDescription)")
+            }
+          
+        }
+    }
     
+    //MARK  - private Method
     private func isDirectory(_ path: String) -> Bool {
         var isDirectory: ObjCBool = false
         let tempPath = currentPath.appendingPathComponent(path)
         fileManager.fileExists(atPath: tempPath.path, isDirectory: &isDirectory)
        return isDirectory.boolValue
     }
-    
     private func move(_ path: URL, _ destination: URL) {
         do {
             try fileManager.moveItem(at: path, to: destination)
