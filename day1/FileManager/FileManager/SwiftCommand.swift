@@ -9,7 +9,7 @@
 import Foundation
 
 public class SwiftCommand {
-
+    typealias PathReturn = (path: URL?, isDirectory: Bool)
     init() {
         print("\n⬛️⬛️⬛️⬛️⬛️⬛️⬛️⬛️⬛️⬛️⬛️⬛️⬛️⬛️\n")
     }
@@ -25,23 +25,9 @@ public class SwiftCommand {
     private var currentPath: URL = FileManager.default.urls(for: .documentDirectory,in: .userDomainMask).first!
     private let fileManager: FileManager = FileManager.default
     
-    public func cd(_ mark : String) -> Bool {
-        switch mark {
-        case "..":
-            currentPath = currentPath.deletingLastPathComponent()
-            return true
-        case "/" :
-            currentPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            return true
-        default :
-            if(fileManager.fileExists(atPath:currentPath.appendingPathComponent(mark).path)) {
-             //   let newPathString =
-              //  guard let newCurrentURL = URL.init(string: newPathString) else {return false }
-                currentPath = currentPath.appendingPathComponent(mark)
-                return true
-            }
-            return false
-        }
+    public func cd(_ mark : String) {
+        guard let path = getFinalDestinationPath(path: mark).path else { return }
+        currentPath = path
     }
     public func mkdir(_ directoryName: String) {
         let tempDirectoryPath = currentPath.appendingPathComponent(directoryName)
@@ -123,7 +109,10 @@ public class SwiftCommand {
         }
     }
     public func cat(_ filepath: String) {
-        let path = currentPath.appendingPathComponent(filepath)
+        
+        guard let tempPath = getFinalDestinationPath(path: filepath).path else { return }
+        
+        let path = tempPath
         if  fileManager.isReadableFile(atPath: path.path) {
             do {
                 let contents = try String.init(contentsOf: path)
@@ -132,9 +121,10 @@ public class SwiftCommand {
                 print(" file reading error description:/ \(error.localizedDescription)")
             }
           
+        } else {
+            
         }
     }
-    
     //MARK  - private Method
     private func isDirectory(_ path: String) -> Bool {
         var isDirectory: ObjCBool = false
@@ -149,8 +139,27 @@ public class SwiftCommand {
             print(" directory moving error description:/ \(error.localizedDescription)")
         }
     }
+    private func getFinalDestinationPath(path: String) -> PathReturn {
+        var tempCurrentPath = currentPath
+        var tempIsDirectory: Bool = false
+        let pathArray = path.split(separator: "/")
+        for mark in pathArray {
+            switch mark {
+            case "..":
+                tempCurrentPath = tempCurrentPath.deletingLastPathComponent()
+            default :
+                 let pathURL = tempCurrentPath.appendingPathComponent(String(mark))
+                 if fileManager.fileExists(atPath: pathURL.path) {
+                    tempCurrentPath = tempCurrentPath.appendingPathComponent(String(mark))
+                     tempIsDirectory = isDirectory(String(mark))
+                 } else {
+                    return (nil,tempIsDirectory)
+                }
+            }
+        }
+        return (tempCurrentPath,tempIsDirectory)
+    }
 }
-
 
 
 

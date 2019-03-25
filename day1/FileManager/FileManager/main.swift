@@ -87,7 +87,8 @@ import Foundation
 let command = SwiftCommand()
 command.touch("temp1file.swift") // 파일 만들고
 command.mkdir("test")
-command.cd("test")
+command.cd("..")
+command.cd("Documents/..")
+command.cat("Documents/../Documents/temp1file.swift")
 
-command.cat("temp2file.swift")
 

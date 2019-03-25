@@ -22,10 +22,6 @@
 
   ##### 쓰이는곳 - 예상하기론 파일의 정렬을 할 때 유용하게 쓰일 것 같네요
 
-- ### createFileAtPath:contents:attributes:
-
-  파일을 생성하는 메서드이기 때문에 생성 메서드 중 가장 많이 쓰이는 메서드입니다.  주어진 경로에 파일을 생성합니다
-
 - #### createDirectoryAtPath:withInterediateDirectiories:attribute:
 
   이 메서드에 경로를 넣으면 해당 경로에 폴더가 만들어지게 됩니다.
