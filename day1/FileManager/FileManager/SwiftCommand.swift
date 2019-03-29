@@ -51,7 +51,10 @@ public class SwiftCommand {
     public func ls() {
         do {
         let subFiles = try fileManager.contentsOfDirectory(atPath:currentPath.path)
-            print(subFiles)
+            for subfile in subFiles {
+                print(subfile)
+            }
+            
         } catch let error {
             print(" file list error description: \(error.localizedDescription)")
         }
