@@ -65,8 +65,6 @@ extension Stack: CustomStringConvertible, CustomDebugStringConvertible {
 }
 
 extension Stack: ExpressibleByArrayLiteral {
-  
-    
     public init(arrayLiteral elements: T...) {
         self.init(elements)
     }
@@ -97,54 +95,63 @@ extension Stack: Sequence {
     }
 }
 
-var stack = Stack<Int>()
-stack.push(1)
-stack.push(2)
-stack.push(3)
-stack.push(4)
-stack.push(5)
-print(stack.pop())
-print(stack.currentElement)
-print(stack.isFull())
-print(stack.isEmpty())
-print(stack.peak())
-var stack2 = Stack<String>(3)
-stack2.push("a")
-stack2.push("b")
-stack2.push("c")
-print(stack2.currentElement)
-print(stack2.isEmpty())
-print(stack2.isFull())
-
-
-var myStack: Stack = [4,5,6,7]
-
-var myStackFromStack = Stack<Int>(myStack)
-
-myStackFromStack.push(55)
-myStack.push(70)
-
-print(myStackFromStack)
-print(myStack)
-
-for element in myStackFromStack {
-    print(element)
-}
-
+//var stack = Stack<Int>()
+//stack.push(1)
+//stack.push(2)
+//stack.push(3)
+//stack.push(4)
+//stack.push(5)
+//print(stack.pop())
+//print(stack.currentElement)
+//print(stack.isFull())
+//print(stack.isEmpty())
+//print(stack.peak())
+//var stack2 = Stack<String>(3)
+//stack2.push("a")
+//stack2.push("b")
+//stack2.push("c")
+//print(stack2.currentElement)
+//print(stack2.isEmpty())
+//print(stack2.isFull())
 //
-//struct Lotto: RandomNumberGenerator {
-//    var seed: Int = Int.max
-//    mutating func next<T>(upperBound: T) -> T where T : FixedWidthInteger, T : UnsignedInteger {
-//        let range = Range(
-//        return T.random(in: Range(, using: &<#T##RandomNumberGenerator#>)
-//    }
+//
+//var myStack: Stack = [4,5,6,7]
+//
+//var myStackFromStack = Stack<Int>(myStack)
+//
+//myStackFromStack.push(55)
+//myStack.push(70)
+//
+//print(myStackFromStack)
+//print(myStack)
+//
+//for element in myStackFromStack {
+//    print(element)
 //}
-//
-//
-//
-//
-//var loTTo = Lotto(seed: 0)
-//print(loTTo.next())
-print(myStackFromStack.currentElement.randomElement())
 
 
+
+
+
+//var queue = Queue<Int>()
+//
+//queue.enqueue(1)
+//queue.enqueue(2)
+//queue.enqueue(3)
+//queue.enqueue(4)
+//queue.enqueue(5)
+//print(queue.dequeue())
+//queue.capacity = 3
+//print(queue.capacity)
+
+
+var queue: Queue<Int> = [1,2,3,4,5]
+var queue2 =  Queue<Int>(queue)
+
+let q1x = queue.dequeue()
+print(q1x)
+queue2.enqueue(55)
+print(queue2)
+for el in queue {
+    print(el)
+}

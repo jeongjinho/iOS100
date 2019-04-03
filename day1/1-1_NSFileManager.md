@@ -1,12 +1,10 @@
-## NSFileManager
+# NSFileManager
 
 
 
 저번에 제가 파일에 관한 작업들은 대부분 NSFileManager에서 이루어진다고 말씀드렸습니다.
 
 그 중 프로젝트를 진행하면서 자주 쓰일 메서드나 프로퍼티를 소개할까 합니다.
-
-
 
 
 
