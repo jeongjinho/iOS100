@@ -155,3 +155,10 @@ print(queue2)
 for el in queue {
     print(el)
 }
+
+
+
+struct RingBuffer<T>  {
+    var data: [T] = []
+    var 
+}
