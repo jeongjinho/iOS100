@@ -149,16 +149,125 @@ var queue: Queue<Int> = [1,2,3,4,5]
 var queue2 =  Queue<Int>(queue)
 
 let q1x = queue.dequeue()
-print(q1x)
 queue2.enqueue(55)
 print(queue2)
 for el in queue {
     print(el)
 }
 
-
+private struct Constants {
+    fileprivate static let defaultBufferCapacity: Int = 16
+}
 
 struct RingBuffer<T>  {
     var data: [T] = []
-    var 
+    var front: Int = 0
+    var rear: Int = 0
+    var internalCount = 0
+    private func isFull() -> Bool {
+        return internalCount == data.capacity
+    }
+    
+    private func isEmpty() -> Bool {
+        return internalCount < 1
+    }
+    //enqueue
+    public mutating func enqueue(_ element: T) {
+        if isFull() {
+            dequeue()
+        }
+        if data.endIndex < data.capacity {
+            self.data.append(element)
+        } else {
+            data[rear] = element
+        }
+        rear = (rear + 1) & (data.capacity - 1)
+        internalCount += 1
+    }
+    //dequeue
+    public mutating func dequeue() -> T? {
+        if isEmpty() {
+            return nil
+        }
+        let el = self.data[front]
+        front = (front + 1) & (self.data.capacity - 1)
+        internalCount -= 1
+        return el
+    }
+    //peek
+    public func peek() -> T? {
+        if isEmpty() {
+            return nil
+        }
+        return self.data[front]
+    }
+    public init(_ count: Int) {
+        var capacity = count
+        if (capacity < 1) {
+            capacity = Constants.defaultBufferCapacity
+        }
+        // 2의 보수
+        // 입력값에 2의 보수취하고 그걸 입력값이랑 AND연산하면 2의 거듭인지 알려줌
+        if capacity &  (~capacity + 1) != capacity {
+            var b = 1
+            while (b < capacity) {
+                b = b << 1
+            }
+            capacity = b
+        }
+        data = [T]()
+        data.reserveCapacity(capacity)
+    }
+    public init() {
+        data = [T]()
+        data.reserveCapacity(Constants.defaultBufferCapacity)
+    }
 }
+
+
+func example(str: String) {
+    
+    var circBuffer = RingBuffer<Int>(4)
+    circBuffer.enqueue(100)
+    circBuffer.enqueue(200)
+    circBuffer.enqueue(300)
+    circBuffer.enqueue(400)
+    circBuffer.enqueue(500)
+    print(circBuffer)
+    let x = circBuffer.dequeue()
+    print(x, circBuffer)
+    let y = circBuffer.dequeue()
+    print(y, circBuffer)
+    let z = circBuffer.peek()
+    print(z, circBuffer)
+    circBuffer.enqueue(600)
+    print(circBuffer)
+    circBuffer.enqueue(700)
+    print(circBuffer)
+    circBuffer.enqueue(800)
+    print(circBuffer)
+    let y2 = circBuffer.dequeue()
+    print(y2, circBuffer)
+    let y3 = circBuffer.dequeue()
+    print(y3, circBuffer)
+    let y4 = circBuffer.dequeue()
+    print(y4, circBuffer)
+    let y5 = circBuffer.dequeue()
+    print(y5, circBuffer)
+}
+
+
+example(str: "Circular buffer")
+
+
+
+func makeRemainer() {
+    
+    let divide = 4
+    let pedivi = 4
+    
+    let remainer = divide & (pedivi - 1)
+    print("%@를 %@로 나눈 몫은 %@, 나머지는 %@이다. \n",divide,pedivi,remainer)
+}
+
+makeRemainer()
