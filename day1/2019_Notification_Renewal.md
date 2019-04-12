@@ -1,4 +1,4 @@
-# Notification_ReNew
+# Notification_Renew
 
 
 
@@ -62,9 +62,67 @@
 
 
 
+```swift
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        if let readSequence = self.alarmList.value.data[optional:indexPath.row]?.sequence {
+            self.sendNotificationActionToServer(sequence: readSequence, action: .read, successAfter: { [weak self] in
+               guard let `self` = self else { return }
+                cell?.contentView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                self.alarmList.value.data[optional:indexPath.row]?.isReading = true
+                self.isEnableAllRead()
+                AFActivityManager().activityStartViewController(self.alarmList.value.data[optional:indexPath.row]?.scheme)
+            })
+        }
+    }
+```
+
+
+
+여기서 data는 실질적으로 알람의 데이터들을 가지고있는 리스트입니다. 여기서 각 셀에 뿌려줄 데이터를 접근할 때  `self.alarmList.value.data[optional:indexPath.row]?.sequence` 이런식으로 배열을 확장한 서브스크립트를 써서 옵셔널값으로 가져와 처리 하였습니다. 이 코드는 없어도 되는 지금 상황에서 없어도 될 것 같지만 데이터를 뽑아낼 때 있는지 없는지 검사하는 건 좋은 것 같아서 넣어습니다.
+
+ 추후 data가 기본값을 주지 않는 것으로 바뀐다면 유용하게쓰일 것 같지만 현재상황에서는 단순 검사하는 코드로만 이용하고 있습니다. 
+
+
+
+Xib에 테이블뷰처럼 단순 뷰를넣어서 코드를 줄일 수도 있어서 현재 코드로 구현되어있는 부분은 추후 Xib로 구현해도 될 것 같긴한데..(왜냐면 뷰가 애니메이션이나 움직일일이 없을 땐 xib그냥 넣는것도 괜찮다고 생각) 추후 빈페이지 Xib로 빼낼때 같이할까 생각중...
+
 ####  Name : Alarm
 
 ##### 	- 용도 : 알람데이트를 서버에서 가져올 때 쓰이는 데이터 클래스입니다.
+
+```swift
+class Alarm {
+    var sequence: Int = 0
+    var notificationType: String = "F00"
+    var fromNickName: String = ""
+    var fromId: String = ""
+    var isReading: Bool = false
+    var headText: String = ""
+    var stationName: String = ""
+    var thumbnail: String = ""
+    var scheme: String = ""
+    var notificationMessage: String = ""
+    var profileImageURL: String = ""
+    var notificationDate: String = ""
+}
+```
+
+저의 데이터모델에서는  힙영역에 할당되는 프로퍼티가 많습니다. 아무래도 보여줘야할 문구들이 많다보니 구조체보다 클래스가 더 맞다고 생각이 들었습니다. 
+
+정리하자면 
+
+1) 단순리스트를 보여주는 것이기 때문에 모델의 속성값을 바꿀 일이 없다.
+
+2)  해당 알람 모델에는 `String` 타입이 많기 때문에 구조체로 감싼다고 값타입의 이점을 얻기 힘들다.. 오히려 메모리에 대한 오버헤드가 늘어날 수도 있다.
+
+상기 이유로 클래스로 모델구조를 잡았습니다!
+
+추가적으로   `Alarm` 클래스를 프로토콜을 준수하도록 만드는 것도 고민 해봐야 겠지만 지금상태에서 프로토콜로 준수를 하면 어떤 이점이 있을지느 더 공부한 후에 적용할지 말지를 결정하겠습니다.
+
+
+
+그리고 기본값을 넣어줘서 옵셔널을 사용하지않도록했는데 이러면 값이 없을 때 깨지지 않아서 좋은 것 같긴한데 옵셔널하면 기본값 넣어주는게 이점이 있다면…… 또 고려해볼만한것 같긴한데 이것도 공부후에..
 
 ####  Name : AFNotificationlistApiClient
 
@@ -157,11 +215,11 @@ API 중 동작( 삭제, 읽음)에 대한 동작들은 한 API에서 액션타�
 
 
 
-2)
+## Todo
 
 코드 중에 각 노티 타입별 뱃지아이콘이 다르게 보여집니다. 이것을 로컬 이미지를 넣어놓고 불러오고 있는데 뱃지아이콘이 38개입니다.( 더 늘어날 수도..) 근데 이걸 모두 로컬에 저장하는게 맞는냐는 잘 모르겠습니다. 또한 로컬이미지 각각을 불러오는데 리소스에 대한 부하가 없느냐도 한번 고려해봐야겠습니다. 실제 다른프로젝트에서는 큰 용량의 로컬이미지를 다수의 테이블뷰셀로 불러올때 부하가 있어서 문제가 있었습니다. (뭐 뱃지는 용량이 작아서 상관없긴하겠지먄)
 
-3)
+
 
 테이블뷰 스와이프 버튼 노출 시 나오는 버튼의 이미지와 타이틀이 있는데 셀의 높이가 작으면 아이콘만 보여지고 타이틀이 사라지게 됩니다. 
 
@@ -173,7 +231,7 @@ API 중 동작( 삭제, 읽음)에 대한 동작들은 한 API에서 액션타�
 
 
 
-4) SwiftJSON  써보기
+ SwiftJSON  써보기
 
 바로전엔 swift에서 제공하는 Codable protocol을 사용했는데
 
@@ -183,3 +241,4 @@ API 중 동작( 삭제, 읽음)에 대한 동작들은 한 API에서 액션타�
 
 이것도 앱네 라이브러리가 있으니 적극 활용하기인데 Codable마스터하면 이걸로 하기…….. 
 
+(notice! as NSString).size(withAttributes: fontAttributes)
