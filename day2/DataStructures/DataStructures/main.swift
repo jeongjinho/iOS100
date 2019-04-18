@@ -94,16 +94,53 @@ func makeRemainer() {
     let remainer = divide & (pedivi - 1)
     print("\(divide)를 \(pedivi)로 나눈 나머지는 \(remainer) 이다. \n")
 }
-
-func makeDivide(value: Int, divide) {
-
-    
-    
-    //    let value = divider >> (divided/2)
-//    print(value)
-    
-    
+func isEvenNumber(_ value: Int) -> Bool {
+    let opt: Int? = nil
+    let opt2: Int? = .none
+    print(opt)
+    print(opt2)
+    return value & 1 == 0 ? true : false
 }
 
 makeRemainer()
-makeDivide()
+
+print(isEvenNumber(4))
+
+//public class ThermometerClass {
+//    private(set) var temperature: Double = 0.0
+//    public func registerTemperature(temperature: Double) {
+//        self.temperature = temperature
+//    }
+//}
+//
+//let thermometerClass = ThermometerClass()
+//thermometerClass.registerTemperature(temperature: 56.0)
+//
+//
+//public struct ThermometerStruct {
+//    private(set) var temperature: Double = 0.0
+//    public mutating func registerTemperature(temperature: Double) {
+//        self.temperature = temperature
+//    }
+//}
+
+//var thermometerStruct = ThermometerStruct()
+//thermometerStruct.registerTemperature(temperature: 56.0)
+//var animals = ["fish", "cat","chicken","dog"]
+//let sortedAnimal = animals.sorted { $0 < $1 }
+//print(sortedAnimal)
+//
+//
+//let str1 = "str1"
+//var str2 = "str2"
+//str1 = "dsd"
+//
+//class someClass {
+//   static let str1 = "str1"
+//   static var str2 = "str2"
+//
+//    func chnage() {
+//        someClass.str1 = "3"
+//       someClass.str2 = "5"
+//    }
+//}

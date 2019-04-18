@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2F225AFF22544CC900620C06 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F225AFE22544CC900620C06 /* Queue.swift */; };
+		2F227BD722686969004B6167 /* BitOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F227BD622686969004B6167 /* BitOperator.swift */; };
 		2F563C80225ECBF900777D1F /* CircularQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F563C7F225ECBF900777D1F /* CircularQueue.swift */; };
 		2F563C82225ECC4C00777D1F /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F563C81225ECC4C00777D1F /* Stack.swift */; };
 		2FB3B9792251D43E00914CBC /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB3B9782251D43E00914CBC /* main.swift */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		2F225AFE22544CC900620C06 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		2F227BD622686969004B6167 /* BitOperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitOperator.swift; sourceTree = "<group>"; };
 		2F563C7F225ECBF900777D1F /* CircularQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularQueue.swift; sourceTree = "<group>"; };
 		2F563C81225ECC4C00777D1F /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		2FB3B9752251D43E00914CBC /* DataStructures */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DataStructures; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +69,7 @@
 				2F563C81225ECC4C00777D1F /* Stack.swift */,
 				2F225AFE22544CC900620C06 /* Queue.swift */,
 				2F563C7F225ECBF900777D1F /* CircularQueue.swift */,
+				2F227BD622686969004B6167 /* BitOperator.swift */,
 			);
 			path = DataStructures;
 			sourceTree = "<group>";
@@ -128,6 +131,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F227BD722686969004B6167 /* BitOperator.swift in Sources */,
 				2F563C82225ECC4C00777D1F /* Stack.swift in Sources */,
 				2FB3B9792251D43E00914CBC /* main.swift in Sources */,
 				2F563C80225ECBF900777D1F /* CircularQueue.swift in Sources */,
