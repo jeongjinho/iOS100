@@ -144,3 +144,46 @@ print(isEvenNumber(4))
 //       someClass.str2 = "5"
 //    }
 //}
+
+struct MyStruct {
+    var num : Int = 0
+}
+
+class  MyClass {
+    var myStruct: MyStruct
+    var text: String = "a"
+    init(_ myStruct: MyStruct) {
+        self.myStruct = myStruct
+    }
+}
+
+var myClass1 = MyClass(MyStruct(num: 0))
+var myClass2 = myClass1
+print(myClass1.myStruct.num)
+myClass2.myStruct.num = 1
+myClass2.text = "b"
+print(myClass2.myStruct.num)
+print(myClass1.myStruct.num)
+print(myClass1.text)
+
+
+func nextGreaterElements(_ nums: [Int]) -> [Int] {
+    var stack: [Int] = []
+    for (index,element) in nums.enumerated(){
+        var start = (index + 1) % nums.count
+        while start != index {
+            if element < nums[start] {
+               stack.append(nums[start])
+                break
+            }
+            start = (start + 1) % nums.count
+        }
+        if start == index {
+            stack.append(-1)
+        }
+    }
+    return stack
+}
+
+print(nextGreaterElements([100,1,11,1,120,111,123,1,-1,-100]))
+//[100,1,11,1,120,111,123,1,-1,-100]
