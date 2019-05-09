@@ -88,3 +88,15 @@ struct CGRect {
 
 
 #### Bounds vs Frame
+
+UIView에 속성중에는 Bounds와 Frame이 있습니다. 이 두개 모두 CGRect타입이지만, 다른 부분이 있습니다.
+
+바로 절대좌표와 상대좌료라는 것인데요
+
+Bounds는 절대 좌표로서 (0,0)을 가지고 있습니다.  자식뷰가  여기에 올라온다면 부모뷰 Bounds (0,0)에 대한 상대좌표로서 Frame을 쓰게 됩니다.
+
+<!--Bounds는 부모뷰로서의 절대좌표, Frame은 자식뷰로서의 상대좌표!-->
+
+쓰임 
+
+Frame은 좌표를 기준으로 움직이는 애니메이션에 사용되기 적합하고 Bounds는 회전된 뷰의 Width나 Height을 알기에 적합합니다. Frame은 뷰가 회전하면 Frame이 그에 맞춰 커지기 때문입니다. (수정)
