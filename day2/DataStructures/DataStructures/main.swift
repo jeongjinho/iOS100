@@ -187,3 +187,16 @@ func nextGreaterElements(_ nums: [Int]) -> [Int] {
 
 print(nextGreaterElements([100,1,11,1,120,111,123,1,-1,-100]))
 //[100,1,11,1,120,111,123,1,-1,-100]
+
+
+
+@discardableResult
+func convertIntegerToString(_ num: Int) -> String {
+    return "\(num)"
+}
+
+
+convertIntegerToString(1)
+
+
+
