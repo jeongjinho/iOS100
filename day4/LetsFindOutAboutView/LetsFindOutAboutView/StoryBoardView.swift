@@ -57,5 +57,24 @@ class StoryBoardView: UIView {
         super.willMove(toSuperview: newWindow)
          print("8.willMoveToWindow - StoryBoardView")
     }
+    override func needsUpdateConstraints() -> Bool {
+        super.needsUpdateConstraints()
+        print("9.needsUpdateConstraints - StoryBoardView")
+        
+        return true
+    }
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        print("9.didMoveToWindow - StoryBoardView")
+    }
+    override func setNeedsLayout() {
+        super.setNeedsLayout()
+        print("10.setNeedsLayout - StoryBoardView")
+    }
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        print("11.draw - StoryBoardView")
+    }
+    
 
 }

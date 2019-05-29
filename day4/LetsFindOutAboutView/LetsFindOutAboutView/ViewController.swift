@@ -9,25 +9,33 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    var redRect: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // storyBoard is loaded
-        //...
         
-//        // instance is initialized
-//        let layerView = LayerClass.init(frame: CGRect(x: 50, y: 50, width: 50, height: 50))
-//        layerView.backgroundColor = .red
-//        self.view.addSubview(layerView)
-//        layerView.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+            self.redRect = LayerClass.init(frame: CGRect(x: 50, y: 50, width: 50, height: 50))
+            self.redRect.backgroundColor = .red
+            self.redRect.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
+            self.view.addSubview(self.redRect)
+            
+            let subview = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+            subview.backgroundColor = .blue
+            self.redRect.addSubview(subview)
+        }
+       
         
-     
-        let interfaceBuilderView = Bundle.main.loadNibNamed("InterfaceBuiderView", owner: self, options: nil)
-        self.view.addSubview(interfaceBuilderView!.first as! InterfaceBuiderView)
-    }
+        
     
-
+    }
+    @IBAction func touchupInsideMoveButton(_ sender: Any) {
+//        self.view.setNeedsDisplay()
+   //     redRect.frame = CGRect(x: 50, y: 50, width: 100, height: 100)
+     //   redRect.setNeedsDisplay()
+    }
 }
 

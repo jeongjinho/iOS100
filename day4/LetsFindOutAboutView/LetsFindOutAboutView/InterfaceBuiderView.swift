@@ -21,6 +21,7 @@ class InterfaceBuiderView: UIView {
     
     override class var layerClass : AnyClass {
         print("1.layerClass - InterfaceBuiderView")
+        
         return CATiledLayer.self
         
     }
@@ -52,5 +53,23 @@ class InterfaceBuiderView: UIView {
         super.willMove(toSuperview: newWindow)
         print("8.willMoveToWindow - InterfaceBuiderView")
     }
-
+    override func needsUpdateConstraints() -> Bool {
+        super.needsUpdateConstraints()
+        print("9.needsUpdateConstraints - InterfaceBuiderView")
+       
+        return true
+    }
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        print("9.didMoveToWindow - InterfaceBuiderView")
+    }
+    override func setNeedsLayout() {
+        super.setNeedsLayout()
+        print("10.setNeedsLayout - InterfaceBuiderView")
+    }
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        print("11.draw - InterfaceBuiderView")
+    }
 }
+

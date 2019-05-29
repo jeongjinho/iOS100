@@ -53,4 +53,31 @@ class LayerClass: UIView {
         super.willMove(toSuperview: newWindow)
         print("8.willMoveToWindow - LayerClass")
     }
+    override func needsUpdateConstraints() -> Bool {
+        super.needsUpdateConstraints()
+        print("9.needsUpdateConstraints - LayerClass")
+        
+        return true
+    }
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        print("9.didMoveToWindow - LayerClass")
+    }
+    override func setNeedsLayout() {
+        super.setNeedsLayout()
+        print("10.setNeedsLayout - LayerClass")
+    }
+    override func layoutIfNeeded() {
+        super.layoutIfNeeded()
+         print("10-1.layoutIfNeeded - LayerClass")
+    }
+    override func draw(_ rect: CGRect) {
+        DispatchQueue.main.async {
+            super.draw(rect)
+            print("11.draw - LayerClass")
+        }
+      
+    }
+   
+    
 }
